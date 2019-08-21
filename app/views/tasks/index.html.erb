@@ -3,8 +3,50 @@
         <h2>You don't have any Tasks! Let's Create One!</h2>
     <% else %>
         <% @tasks.each do |task| %>
-            <h2><%= link_to task.title, task %></h2>
-            <p><%= task.description %></p>
+            <div class="index-wrapper">
+                <% if task.completed? %>
+                    <div class="row item">
+                        <div class="col-md-2">
+                            <p><%= link_to complete_task_path(task), method: :patch do %></p>
+                                <i class="fa fa-check fa-lg"></i>
+                            <% end %>
+                        </div>
+
+                        <div class="col-md-2">
+                            <p><%= link_to task, method: :delete, data: { confirm: "Are you sure? " } do %></p>
+                                <i class="fa fa-trash fa-lg"></i>
+                            <% end %>
+                        </div>
+
+                        <div class="col-md-8 completed">
+                            <h2 class="task-title"><strike><%= link_to task.title, task%></strike></h2>
+                            <p class="task-desc"><%= task.description %></p>                            
+                            <p>Completed <%= time_ago_in_words(task.completed_at) %></p>
+                        </div>
+                    </div>
+                <% else %>
+                <!-- For Items Not Completed-->
+                <div class="row">
+                    <div class="col-md-2">
+                        <p><%= link_to complete_task_path(task), method: :patch do %></p>
+                            <i class="fa fa-check fa-lg"></i>
+                        <% end %>
+                    </div>
+
+                    <div class="col-md-8">
+                        <h2 class="task-title"><%= link_to task.title, task %></h2>
+                        <p class="task-desc"><%= task.description %></p>
+                        <p>Created <%= time_ago_in_words(task.created_at) %></p>
+                    </div>
+
+                    <div class="col-md-2">
+                        <p><%= link_to task, method: :delete, data: { confirm: "Are you sure?" } do %></p>
+                            <i class="fa fa-trash fa-lg"></i>
+                        <% end %>
+                    </div>
+                </div>
+                <% end %>
+            </div>
         <% end %>
     <% end %>
 <% else %>

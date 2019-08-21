@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-    before_action :find_task, only: [:show, :edit, :update, :destroy, :completed]
+    before_action :find_task, only: [:show, :edit, :update, :destroy, :complete]
 
     def index
         if user_signed_in?
@@ -40,7 +40,7 @@ class TasksController < ApplicationController
     end
 
     def complete
-        @task.update_attribut(:completed_at, Time.now)
+        @task.update_attribute(:completed_at, Time.now)
         redirect_to root_path
     end
 
