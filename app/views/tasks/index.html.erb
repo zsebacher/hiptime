@@ -1,4 +1,12 @@
-<% @tasks.each do |task| %>
-    <h2><%= link_to task.title, task %></h2>
-    <p><%= task.description %></p>
+<% if user_signed_in? %>
+    <% if @tasks.count == 0 %>
+        <h2>You don't have any Tasks! Let's Create One!</h2>
+    <% else %>
+        <% @tasks.each do |task| %>
+            <h2><%= link_to task.title, task %></h2>
+            <p><%= task.description %></p>
+        <% end %>
+    <% end %>
+<% else %>
+    <%= render 'welcome_page' %>
 <% end %>
